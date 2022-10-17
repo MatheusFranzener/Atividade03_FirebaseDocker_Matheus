@@ -1,35 +1,38 @@
-let listaUsuarios = [];
+const crud = require("../../crud");
 
-async function getUsuarios(){
-    return listaUsuarios;
+async function getUsuarios() {
+    const users = await crud.get("Users");
+    return users;
 }
 
-async function cadastrarUsuario(dados){
-    listaUsuarios.push(dados);
-    return dados;
+async function cadastrarUsuario(dados) {
+    const usuario = await crud.save("Users", undefined, dados);
+    return usuario;
 }
 
-async function apagarDados(){
-    listaUsuarios = [];
+async function apagarDados(id) {
+    const userDeletado = await crud.remove("Users", id);
+    return userDeletado;
 }
 
-function verificarUsuarios(dados){
-    let idUsuario = dados.idUsuario;
-    let senha = dados.senha;
+async function verificarUsuarios(dados) {
+    console.log("Dados aq: ", dados);
+    let idUsuario = dados.userCPF;
+    let senha = dados.userPassword;
 
-    if(listaUsuarios.length!=0){
+    const listaUsuarios = await crud.get("Users");
+
+    if (listaUsuarios.length != 0) {
         for (let i = 0; i < listaUsuarios.length; i++) {
-            if(listaUsuarios[i].id == idUsuario){
-                if(listaUsuarios[i].senha == senha){
+            if (listaUsuarios[i].CPF == idUsuario) {
+                if (listaUsuarios[i].Password == senha) {
+                    console.log("Lista i: ", listaUsuarios[i]);
                     return true;
-                } else {
-                    return false;
                 }
-            } else {
-                return false;
             }
         }
     }
+    return false;
 }
 
 module.exports = {
