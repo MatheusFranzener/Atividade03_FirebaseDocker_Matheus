@@ -36,7 +36,7 @@ async function cadastrarProdutos(dados) {
     // Fetch sem o docker
     let verificacao = true;
 
-    const res = await fetch("http://localhost:3000/api/usuario/login", {
+    const res = await fetch("http://destino:3000/api/usuario/login", {
         method: 'POST',
         body: JSON.stringify(dados),
         headers: {
